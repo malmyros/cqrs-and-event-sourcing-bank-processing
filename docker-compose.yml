@@ -1,11 +1,13 @@
 services:
 
   axon-server:
-    image: "axoniq/axonserver"
+    image: axoniq/axonserver:latest
+    container_name: axonserver
     ports:
-      - "8024:8024"
-      - "8214:8214"
-    restart: always
+      - "8024:8024"   # HTTP dashboard
+      - "8124:8124"   # gRPC communication (Axon clients)
+    environment:
+      - AXONIQ_AXONSERVER_DEVMODE_ENABLED=true
 
   mongodb:
     image: "mongo:6-jammy"

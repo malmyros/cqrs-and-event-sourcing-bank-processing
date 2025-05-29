@@ -7,3 +7,9 @@ spring:
       host: localhost
       port: 27017
       database: user
+
+axon:
+  axonserver:
+    enabled: true
+    servers: 127.0.0.1:8124
+    devmode-enabled: true
