@@ -1,19 +1,17 @@
-package com.springbank.user.cmd.api.commands;
+package com.springbank.user.core.events;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import com.springbank.user.core.models.User;
-import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterUserCommand {
+public class UserRegisteredEvent {
 
-    @TargetAggregateIdentifier
     private String id;
 
     private User user;

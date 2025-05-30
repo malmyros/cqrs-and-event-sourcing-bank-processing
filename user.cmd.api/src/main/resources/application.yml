@@ -9,6 +9,19 @@ spring:
       database: user
 
 axon:
+  serializer:
+    general: jackson        # Serializer for events, tokens, etc.
+    events: jackson
+    messages: jackson
+
+  eventhandling:
+    processors:
+      user-group:
+        mode: tracking      # Using TrackingEventProcessor
+        source: eventStore
+        initial-segment-count: 1
+        thread-count: 1
+
   axonserver:
     enabled: true
     servers: 127.0.0.1:8124

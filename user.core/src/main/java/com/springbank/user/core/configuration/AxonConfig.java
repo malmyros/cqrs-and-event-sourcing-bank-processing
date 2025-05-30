@@ -1,10 +1,9 @@
-package configuration;
+package com.springbank.user.core.configuration;
 
 import com.mongodb.MongoClientSettings;
 import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
-import com.thoughtworks.xstream.XStream;
 import org.axonframework.eventhandling.EventMessage;
 import org.axonframework.eventhandling.tokenstore.TokenStore;
 import org.axonframework.eventsourcing.eventstore.EmbeddedEventStore;
@@ -15,7 +14,7 @@ import org.axonframework.extensions.mongo.eventsourcing.eventstore.MongoEventSto
 import org.axonframework.extensions.mongo.eventsourcing.tokenstore.MongoTokenStore;
 import org.axonframework.monitoring.MessageMonitor;
 import org.axonframework.serialization.Serializer;
-import org.axonframework.serialization.xml.XStreamSerializer;
+import org.axonframework.serialization.json.JacksonSerializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -58,14 +57,7 @@ public class AxonConfig {
     @Bean
     @Primary
     public Serializer serializer() {
-        XStream xStream = new XStream();
-        xStream.allowTypesByWildcard(new String[]{
-                "com.springbank.**",
-                "org.axonframework.**"
-        });
-        return XStreamSerializer.builder()
-                .xStream(xStream)
-                .build();
+        return JacksonSerializer.defaultSerializer();
     }
 
     @Bean

@@ -1,4 +1,4 @@
-package models;
+package com.springbank.user.core.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Document(collation = "users")
+@Document(collection = "users")
 public class User {
 
     @Id

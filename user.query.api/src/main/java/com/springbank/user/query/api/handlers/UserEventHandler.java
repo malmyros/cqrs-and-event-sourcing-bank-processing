@@ -1,8 +1,8 @@
 package com.springbank.user.query.api.handlers;
 
-import events.UserRegisteredEvent;
-import events.UserRemovedEvent;
-import events.UserUpdatedEvent;
+import com.springbank.user.core.events.UserRegisteredEvent;
+import com.springbank.user.core.events.UserRemovedEvent;
+import com.springbank.user.core.events.UserUpdatedEvent;
 
 public interface UserEventHandler {
 

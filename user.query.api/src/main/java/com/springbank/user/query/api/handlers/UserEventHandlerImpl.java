@@ -1,9 +1,9 @@
 package com.springbank.user.query.api.handlers;
 
 import com.springbank.user.query.api.repositories.UserRepository;
-import events.UserRegisteredEvent;
-import events.UserRemovedEvent;
-import events.UserUpdatedEvent;
+import com.springbank.user.core.events.UserRegisteredEvent;
+import com.springbank.user.core.events.UserRemovedEvent;
+import com.springbank.user.core.events.UserUpdatedEvent;
 import org.axonframework.config.ProcessingGroup;
 import org.axonframework.eventhandling.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -5,10 +5,10 @@ import com.springbank.user.cmd.api.commands.RemoveUserCommand;
 import com.springbank.user.cmd.api.commands.UpdateUserCommand;
 import com.springbank.user.cmd.api.security.PasswordEncoder;
 import com.springbank.user.cmd.api.security.PasswordEncoderImpl;
-import events.UserRegisteredEvent;
-import events.UserRemovedEvent;
-import events.UserUpdatedEvent;
-import models.User;
+import com.springbank.user.core.events.UserRegisteredEvent;
+import com.springbank.user.core.events.UserRemovedEvent;
+import com.springbank.user.core.events.UserUpdatedEvent;
+import com.springbank.user.core.models.User;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -32,9 +32,9 @@ public class UserAggregate {
     }
 
     @CommandHandler
-    public UserAggregate(RegisterUserCommand registerUserCommand) {
-        User newUser = registerUserCommand.getUser();
-        newUser.setId(registerUserCommand.getId());
+    public UserAggregate(RegisterUserCommand command) {
+        User newUser = command.getUser();
+        newUser.setId(command.getId());
 
         this.passwordEncoder = new PasswordEncoderImpl();
 
@@ -43,7 +43,7 @@ public class UserAggregate {
         newUser.getAccount().setPassword(hashedPassword);
 
         UserRegisteredEvent userRegisteredEvent = UserRegisteredEvent.builder()
-                .id(registerUserCommand.getId())
+                .id(command.getId())
                 .user(newUser)
                 .build();
 
@@ -51,9 +51,9 @@ public class UserAggregate {
     }
 
     @CommandHandler
-    public void handle(UpdateUserCommand updateUserCommand) {
-        User updatedUser = updateUserCommand.getUser();
-        updatedUser.setId(updateUserCommand.getId());
+    public void handle(UpdateUserCommand command) {
+        User updatedUser = command.getUser();
+        updatedUser.setId(command.getId());
 
         String password = updatedUser.getAccount().getPassword();
         String hashedPassword = passwordEncoder.hashPassword(password);
@@ -68,9 +68,9 @@ public class UserAggregate {
     }
 
     @CommandHandler
-    public void handle(RemoveUserCommand removeUserCommand) {
+    public void handle(RemoveUserCommand command) {
         UserRemovedEvent userRemovedEvent = new UserRemovedEvent();
-        userRemovedEvent.setId(removeUserCommand.getId());
+        userRemovedEvent.setId(command.getId());
 
         AggregateLifecycle.apply(userRemovedEvent);
     }
@@ -87,7 +87,7 @@ public class UserAggregate {
     }
 
     @EventSourcingHandler
-    public void on(UserRemovedEvent userRemovedEvent) {
+    public void on(UserRemovedEvent event) {
         AggregateLifecycle.markDeleted();
     }
 }
