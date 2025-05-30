@@ -2,6 +2,8 @@ server:
   port: 8081
 
 spring:
+  application:
+    name: user-command-api
   data:
     mongodb:
       host: localhost
@@ -10,14 +12,14 @@ spring:
 
 axon:
   serializer:
-    general: jackson        # Serializer for events, tokens, etc.
+    general: jackson
     events: jackson
     messages: jackson
 
   eventhandling:
     processors:
       user-group:
-        mode: tracking      # Using TrackingEventProcessor
+        mode: tracking
         source: eventStore
         initial-segment-count: 1
         thread-count: 1
